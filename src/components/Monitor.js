@@ -300,6 +300,9 @@ const data2 = [{"load":"L1498897","owner":"TBA","route":"IN1000_EW-W","carrier":
   ];
   const [tableData, setTableData] = React.useState([]);
 
+  const todaysDate = new Date().toISOString().split('T')[0];
+  // const todaysDate = "2023-06-05";
+
   useEffect(() => {
     getData();
   }, []);
@@ -332,45 +335,7 @@ const data2 = [{"load":"L1498897","owner":"TBA","route":"IN1000_EW-W","carrier":
     }
   };
 
-  // const getData = () => {
 
-  //   try {
-  //     const headers = {
-  //       'Access-Control-Allow-Headers': 'X-Api-Key',
-  //       'X-Api-Key': 'ea9f0db5182d450196743c2578081c90'
-  //     };
-  //     axios.get(
-  //       "https://dwapi.logikor.com/api/v1/loadmonitor?monitor=green",
-  //       { headers }
-  //     ).then((response) => {
-  //       const array = [];
-  //       const loads = response.data;
-  //       let origin = loads.map(a => a.originLocation);
-  //       let result = loads.map(a => a.destinationLocation);
-  //       let planned = loads.map(a => a.plannedDelivery);
-  //       let load = loads.map(a => a.loadNumber);
-  //       let owner = loads.map(a => a.customer);
-
-  //       for (let i = 0; i < result.length; i++) {
-  //         if (result[i] != origin[i] && planned[i].includes("2021") && load[i] != "L984096" || result[i] != origin[i] && planned[i].includes("2023") && load[i] != "L984096") {
-
-  //           if (load[i] != "L995754") {
-  //             array.push(loads[i])
-  //           }
-
-  //         }
-  //       }
-  //       const sortedArray = array.sort((a, b) => new Date(a.plannedDelivery) - new Date(b.plannedDelivery))
-
-  //       setTableData(sortedArray);
-
-  //     }
-  //     )
-
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
 
   const classes = useStyles();
 
@@ -394,7 +359,7 @@ const data2 = [{"load":"L1498897","owner":"TBA","route":"IN1000_EW-W","carrier":
         </TableHead>
         <TableBody>
           {tableData &&
-            tableData.map((row) => {
+            tableData.filter((load) => {if(load){ return todaysDate == load.planned_delivery.slice(0,10) && load.dest == "TOYOWO"}} ).map((row) => {
               if (row) {
                 return (
                   <StyledTableRow key={row.load}>
