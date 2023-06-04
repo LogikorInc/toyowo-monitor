@@ -359,7 +359,7 @@ const data2 = [{"load":"L1498897","owner":"TBA","route":"IN1000_EW-W","carrier":
         </TableHead>
         <TableBody>
           {tableData &&
-            tableData.filter((load) => {if(load){ return todaysDate == load.planned_delivery.slice(0,10) && load.dest == "TOYOWO"}} ).map((row) => {
+            tableData.filter((load) => {if(load){ return todaysDate >= load.planned_delivery.slice(0,10) && load.dest == "TOYOWO"}} ).map((row) => {
               if (row) {
                 return (
                   <StyledTableRow key={row.load}>
